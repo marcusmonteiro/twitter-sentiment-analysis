@@ -1,4 +1,6 @@
 import json
+from random import randint
+from itertools import repeat
 from config import TWITTER_STREAMING_DATA_FILE
 from twitter_data import write_streaming_data
 
@@ -34,11 +36,26 @@ def get_twitter_sentiment(file=TWITTER_STREAMING_DATA_FILE):
     sentiment_dict = make_word_sentiment_dict()
 
     def f():
-        ret = 0
+        ret = {
+          "sentiment_value": 0,
+          "tweets_read": 0,
+          "tweet_samples": []
+        }
         with open(file, 'r') as f:
             data = json.load(f)
             for tweet in data:
-                ret = ret + sentence_sentiment_value(tweet, sentiment_dict)
+                ret["sentiment_value"] = ret["sentiment_value"] + sentence_sentiment_value(tweet, sentiment_dict)
+                ret["tweets_read"] = ret["tweets_read"] + 1
+
+            max_number_samples = 10
+            if len(data) < max_number_samples:
+                number_samples = len(data)
+            else:
+                number_samples = max_number_samples
+
+            for _ in repeat(None, number_samples):
+                ret["tweet_samples"].append(data[randint(0, len(data))])
+
         return ret
 
     try:

@@ -36,7 +36,7 @@ def write_streaming_data(minutes=MINUTES_GETTING_STREAM, file=TWITTER_STREAMING_
                     pass
                 return True
             else:
-                with open(file, "w") as f:
+                with open(file, mode="w", encoding="utf-8") as f:
                     f.write(json.dumps(self.tweets))
                 return False
 
