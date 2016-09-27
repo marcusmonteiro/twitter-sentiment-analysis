@@ -2,7 +2,7 @@ import json
 import time
 import tweepy
 from utils import get_or_set_environment_variable
-from config import TWITTER_STREAMING_DATA_FILE
+from config import TWITTER_STREAMING_DATA_FILE, MINUTES_GETTING_STREAM
 
 
 def make_tweepy_api():
@@ -18,7 +18,7 @@ def make_tweepy_api():
     return tweepy.API(auth)
 
 
-def write_streaming_data(minutes=3, file=TWITTER_STREAMING_DATA_FILE):
+def write_streaming_data(minutes=MINUTES_GETTING_STREAM, file=TWITTER_STREAMING_DATA_FILE):
     """Write a stream of tweet statuses to a file"""
     seconds = minutes * 60
     class StdOutListener(tweepy.StreamListener):
@@ -30,7 +30,7 @@ def write_streaming_data(minutes=3, file=TWITTER_STREAMING_DATA_FILE):
 
         def on_data(self, data):
             if (time.time() - self.start_time) < self.time_limit:
-                try: 
+                try:
                     self.tweets.append(json.loads(data)['text'])
                 except KeyError:
                     pass
