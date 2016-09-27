@@ -45,7 +45,3 @@ def write_streaming_data(minutes=3, file=TWITTER_STREAMING_DATA_FILE):
 
     twitter_stream = tweepy.Stream(auth=make_tweepy_api().auth, listener=StdOutListener())
     twitter_stream.sample()
-
-
-if __name__ == "__main__":
-    write_streaming_data() 

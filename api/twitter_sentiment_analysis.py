@@ -40,5 +40,6 @@ def get_twitter_sentiment(file=TWITTER_STREAMING_DATA_FILE):
     try:
         return f()
     except FileNotFoundError:
+        print("Getting twitter streaming data, please wait...")
         write_streaming_data()
         return f()
