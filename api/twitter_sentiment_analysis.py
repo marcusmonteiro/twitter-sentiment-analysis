@@ -7,10 +7,12 @@ from twitter_data import write_streaming_data
 
 def make_word_sentiment_dict(file='AFINN-111.txt'):
     '''Build a dict with words as keys and their sentiment values as values'''
+    if not os.path.getsize(file) > 0:
+        raise Exception('File is empty')
     ret = {}
     with open(file, 'r') as f:
         for line in f:
-            l = line.strip().split('\t')
+            l = line.strip().split()
             ret[l[0]] = int(l[1])
     return ret
 

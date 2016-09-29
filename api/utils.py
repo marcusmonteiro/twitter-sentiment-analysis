@@ -21,3 +21,4 @@ def get_or_set_environment_variable(environment_variable_name):
     except LookupError:
         set_environment_variable(environment_variable_name)
         return get_environment_variable(environment_variable_name)
+
